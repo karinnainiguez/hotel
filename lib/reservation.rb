@@ -1,8 +1,10 @@
 
 
 
+
+
 module  Hotel
-  class Room
+  class Reservation
 
     def initialize
 
@@ -10,5 +12,5 @@ module  Hotel
 
 
 
-  end # Class Room
+  end # Class Reservation
 end # Module Hotel
