@@ -8,9 +8,21 @@ require_relative 'room'
 module  Hotel
   class Booking
 
-    def initialize
+    NUM_OF_ROOMS = 20
 
-    end
+    attr_reader :rooms
+
+    def initialize
+      @rooms = []
+      create_rooms
+    end # initialize
+
+    def create_rooms
+      NUM_OF_ROOMS.times do |i|
+        data = {number: i+1}
+        @rooms << Room.new(data)
+      end
+    end # create_rooms
 
 
 
