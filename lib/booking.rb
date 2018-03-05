@@ -1,10 +1,12 @@
 
+
+require_relative 'reservation'
 require_relative 'room'
 
 
 
 module  Hotel
-  class Reservation
+  class Booking
 
     def initialize
 
@@ -12,5 +14,5 @@ module  Hotel
 
 
 
-  end # Class Reservation
+  end # Class Booking
 end # Module Hotel
