@@ -1,8 +1,9 @@
 
+require_relative 'loader'
 require 'date'
 
 module  Hotel
-  class Room
+  class Room < Loader
 
     attr_reader :number, :reserved, :blocked
     attr_accessor :price
@@ -18,6 +19,7 @@ module  Hotel
     end
 
     def reserved?(date)
+      date = validate_date(date)
       if @reserved.include?(date)
         return true
       else
@@ -26,6 +28,9 @@ module  Hotel
     end
 
     def reserve(start_date, end_date)
+      start_date = validate_date(start_date)
+      end_date = validate_date(end_date)
+      validate_stay(start_date, end_date)
       stay = end_date - start_date
 
       stay.to_i.times do |index|
@@ -40,29 +45,6 @@ module  Hotel
     def block(date, name)
 
     end
-
-    def validate_date(entry)
-      if entry.class == String
-        entry = Date.strptime(entry, '%m/%d/%Y')
-        if entry.class != Date || entry < OLDEST_RES_DATE || entry > NEWEST_RES_DATE
-          raise ArgumentError.new("Invalid date.  Please enter MM/DD/YYYY Received #{entry}")
-        end
-      elsif entry.class == Date
-        if entry < OLDEST_RES_DATE || entry > NEWEST_RES_DATE
-          raise ArgumentError.new("Date: Invalid date. Received #{entry}")
-        end
-      else
-        raise ArgumentError.new("Other: Invalid date. Received #{entry}")
-      end
-      return entry
-    end
-
-    def validate_stay(beginning, ending)
-      if beginning > ending
-        raise ArgumentError.new("Start date cannot be after end date")
-      end
-    end
-
 
 
   end # Class Room
