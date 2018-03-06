@@ -1,10 +1,10 @@
 
-
+require 'date'
 
 module  Hotel
   class Room
 
-    attr_reader :number
+    attr_reader :number, :reserved, :blocked
     attr_accessor :price
 
     def initialize(data)
@@ -13,6 +13,32 @@ module  Hotel
       end
       @number = data[:number]
       @price = data[:price].to_f ||= 200.00
+      @reserved = []
+      @blocked = {}
+    end
+
+    def reserved?(date)
+      if @reserved.include?(date)
+        return true
+      else
+        return false
+      end
+    end
+
+    def reserve(start_date, end_date)
+      stay = end_date - start_date
+
+      stay.to_i.times do |index|
+        @reserved << start_date + index
+      end
+    end
+
+    def blocked?(date)
+
+    end
+
+    def block(date, name)
+
     end
 
 
