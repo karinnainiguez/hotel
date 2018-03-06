@@ -25,11 +25,11 @@ describe "Room Class" do
     it "raises an argument if incorrect room number provided" do
       data = {number: "whatever", price: 400}
       proc{
-        room = Hotel::Room.new(data)
+        Hotel::Room.new(data)
       }.must_raise ArgumentError
       data = {number: 4.56, price: 400}
       proc{
-        room = Hotel::Room.new(data)
+        Hotel::Room.new(data)
       }.must_raise ArgumentError
     end
 
@@ -57,7 +57,7 @@ describe "Room Class" do
       start_date = Date.new(2018, 05, 03)
       end_date = Date.new(2018, 05, 13)
       days_in_stay = end_date - start_date
-      result = @room.reserve(start_date, end_date)
+      @room.reserve(start_date, end_date)
       @room.reserved.length.must_equal days_in_stay
     end
 

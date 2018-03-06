@@ -10,6 +10,12 @@ module  Hotel
     attr_reader :start_date, :end_date, :room
 
     def initialize(data)
+      if data[:room].class != Room
+        raise ArgumentError.new("Must enter room to be reserved")
+      end
+      @room = data[:room] # MUST BE INSTANCE OF ROOM
+
+
       @start_date = validate_date(data[:start_date])
       @end_date = validate_date(data[:end_date])
 
@@ -17,10 +23,8 @@ module  Hotel
         raise ArgumentError.new("Start date cannot be after end date")
       end
 
-      # OPTIONAL ITEMS
-      @room = data[:room]
+      # OPTIONAL
       @block = data[:block]
-
     end
 
     def validate_date(string)

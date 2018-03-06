@@ -29,7 +29,6 @@ module  Hotel
       @rooms.find do |room|
         room.number == num
       end
-
     end
 
 
