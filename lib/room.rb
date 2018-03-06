@@ -41,6 +41,28 @@ module  Hotel
 
     end
 
+    def validate_date(entry)
+      if entry.class == String
+        entry = Date.strptime(entry, '%m/%d/%Y')
+        if entry.class != Date || entry < OLDEST_RES_DATE || entry > NEWEST_RES_DATE
+          raise ArgumentError.new("Invalid date.  Please enter MM/DD/YYYY Received #{entry}")
+        end
+      elsif entry.class == Date
+        if entry < OLDEST_RES_DATE || entry > NEWEST_RES_DATE
+          raise ArgumentError.new("Date: Invalid date. Received #{entry}")
+        end
+      else
+        raise ArgumentError.new("Other: Invalid date. Received #{entry}")
+      end
+      return entry
+    end
+
+    def validate_stay(beginning, ending)
+      if beginning > ending
+        raise ArgumentError.new("Start date cannot be after end date")
+      end
+    end
+
 
 
   end # Class Room
