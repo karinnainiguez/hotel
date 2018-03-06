@@ -24,4 +24,27 @@ describe "Booking Class" do
 
   end # initialize
 
+  describe "#room_by_num" do
+
+    before do
+      @booking = Hotel::Booking.new
+    end
+
+    it "returns an instance of room" do
+      result = @booking.room_by_num(12)
+      result.must_be_kind_of Hotel::Room
+    end
+
+    it "returns nil if room does not exist" do
+      result = @booking.room_by_num(67)
+      result.must_be_nil
+    end
+
+    it "returns nil if invalid argument given" do
+      result = @booking.room_by_num("Some String")
+      result.must_be_nil
+    end
+
+  end # room_by_num
+
 end # Booking Class

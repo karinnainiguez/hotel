@@ -14,6 +14,7 @@ module  Hotel
 
     def initialize
       @rooms = []
+      @reservations = []
       create_rooms
     end # initialize
 
@@ -24,6 +25,12 @@ module  Hotel
       end
     end # create_rooms
 
+    def room_by_num(num)
+      @rooms.find do |room|
+        room.number == num
+      end
+
+    end
 
 
   end # Class Booking
