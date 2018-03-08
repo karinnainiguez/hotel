@@ -3,8 +3,6 @@ require_relative 'loader'
 require_relative 'reservation'
 require_relative 'room'
 
-
-
 module  Hotel
   class Booking < Loader
 
@@ -40,9 +38,11 @@ module  Hotel
     end
 
     def rooms_by_range(start_date, end_date)
+
       start_date = validate_date(start_date)
       end_date = validate_date(end_date)
       date_set = Set.new(start_date...end_date)
+
       avail_array = @rooms.reject do |room|
         date_set.intersect? room.reserved.to_set
       end
@@ -61,7 +61,6 @@ module  Hotel
       else
         room = available_rooms.sample
       end
-
 
       reservation = Reservation.new(start_date: start_date, end_date: end_date, room: room)
       @reservations << reservation

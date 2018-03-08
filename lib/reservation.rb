@@ -22,10 +22,12 @@ module  Hotel
     end
 
     def total_cost
+      stay_length * @room.price
 
     end
 
     def stay_length
+      @end_date - @start_date
     end
 
   end # Class Reservation

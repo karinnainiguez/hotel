@@ -76,14 +76,55 @@ describe "Reservation Class" do
 
     end
 
-
-
-
-
-
-
-
   end # initialize
 
+  describe "#stay_length helper method" do
+
+    it "returns acurate days in integer form for one day reservation" do
+      room = Hotel::Room.new(number: 4)
+      reservation = Hotel::Reservation.new(room: room, start_date: "07/15/2018", end_date: "07/16/2018")
+      expected_price = 1
+      result = reservation.stay_length
+      result.must_equal expected_price
+    end
+
+    it "returns zero if checkin and checkout are same day" do
+      room = Hotel::Room.new(number: 4)
+      reservation = Hotel::Reservation.new(room: room, start_date: "07/15/2018", end_date: "07/15/2018")
+      expected_price = 0
+      result = reservation.stay_length
+      result.must_equal expected_price
+    end
+
+  end # stay_length
+
+  describe "#total_cost" do
+
+    it "returns an accurate total cost for 1 day stay" do
+      expected_price = 100
+      room = Hotel::Room.new(number: 5, price: expected_price)
+      reservation = Hotel::Reservation.new(room: room, start_date: "05/01/2018", end_date: "05/02/2018")
+      result = reservation.total_cost
+      result.must_equal expected_price
+    end
+
+    it "returns an accurate total cost for 3 day stay" do
+      room = Hotel::Room.new(number: 5, price: 100)
+      reservation = Hotel::Reservation.new(room: room, start_date: "05/01/2018", end_date: "05/04/2018")
+      expected_price = room.price * 3
+      result = reservation.total_cost
+      result.must_equal expected_price
+    end
+
+    it "returns zero if checkout is same day" do
+      room = Hotel::Room.new(number: 5, price: 300)
+      reservation = Hotel::Reservation.new(room: room, start_date: "05/01/2018", end_date: "05/01/2018")
+      expected_price = 0
+      result = reservation.total_cost
+      result.must_equal expected_price
+    end
+
+
+  end # total_cost
 
 end # Reservation Class
