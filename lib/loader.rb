@@ -27,12 +27,8 @@ module Hotel
       if beginning > ending
         raise ArgumentError.new("Start date cannot be after end date")
       end
+      return (ending - beginning).to_i
     end
-
-
-
-
-
 
   end # class loader
 

@@ -10,7 +10,7 @@ module  Hotel
 
     NUM_OF_ROOMS = 20
 
-    attr_reader :rooms
+    attr_reader :rooms, :reservations
 
     def initialize
       @rooms = []
@@ -31,22 +31,42 @@ module  Hotel
       end
     end
 
-    def find_next_room(start_date, end_date)
 
+    def rooms_by_day(date)
+      date = validate_date(date)
+      @rooms.reject do |room|
+        room.reserved?(date) && room.blocked?(date)
+      end
     end
 
-    def available_rooms(date)
+    def rooms_by_range(start_date, end_date)
+      start_date = validate_date(start_date)
+      end_date = validate_date(end_date)
+      date_set = Set.new(start_date...end_date)
+      avail_array = @rooms.reject do |room|
+        date_set.intersect? room.reserved.to_set
+      end
 
+      return avail_array
     end
+
 
     def reserve(data)
-      start_date = data[:start_date]
-      end_date = data[:end_date]
-      if data[:room_num]
-        room = room_by_num(data[:room_num])
+      start_date = validate_date(data[:start_date])
+      end_date = validate_date(data[:end_date])
+      available_rooms = rooms_by_range(start_date, end_date)
+      if available_rooms.length == 0
+        raise ArgumentError.new("Sorry, we do not have a room available at this time")
+
       else
-        room = find_next_room
+        room = available_rooms.sample
       end
+
+
+      reservation = Reservation.new(start_date: start_date, end_date: end_date, room: room)
+      @reservations << reservation
+      room.reserve(start_date, end_date)
+      return reservation
     end
 
 

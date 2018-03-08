@@ -47,4 +47,65 @@ describe "Booking Class" do
 
   end # room_by_num
 
+  describe "#reserve" do
+
+    it "returns a reservation with start date and end date." do
+      book = Hotel::Booking.new
+      start = Date.new(2018, 04, 02)
+
+      result = book.reserve(start_date: start, end_date: start + 3)
+      result.must_be_kind_of Hotel::Reservation
+    end
+
+    it "updates the reservations array" do
+      book = Hotel::Booking.new
+      before = book.reservations.length
+      book.reserve(start_date: "05/02/2018", end_date: "05/08/2018")
+      after = book.reservations.length
+      after.must_equal before + 1
+      book.reservations[0].must_be_kind_of Hotel::Reservation
+    end
+
+    it "raises an error if no available rooms" do
+      book = Hotel::Booking.new
+      20.times do
+        book.reserve(start_date: "06/01/2018", end_date: "06/03/2018")
+      end
+      proc {
+        book.reserve(start_date: "06/01/2018", end_date: "06/03/2018")
+      }.must_raise ArgumentError
+    end
+
+    it "raises an error if incorrect date information is given" do
+      book = Hotel::Booking.new
+      proc {
+        book.reserve(start_date: "August 29th", end_date: "09/30/2018")
+      }.must_raise ArgumentError
+    end
+
+    it "raises an error if no start date or end date is given" do
+      book = Hotel::Booking.new
+      proc {
+        book.reserve(end_date: "09/30/2018")
+      }.must_raise ArgumentError
+
+      proc {
+        book.reserve(start_date: "09/30/2018")
+      }.must_raise ArgumentError
+
+      proc {
+        book.reserve()
+      }.must_raise ArgumentError
+    end
+
+    it "raises an error if end date is before start date" do
+      book = Hotel::Booking.new
+      proc {
+        book.reserve(start_date: "11/01/2018", end_date: "09/30/2018")
+      }.must_raise ArgumentError
+    end
+
+
+  end # reserve
+
 end # Booking Class

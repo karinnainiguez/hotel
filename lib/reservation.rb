@@ -5,13 +5,9 @@ require_relative 'room'
 module  Hotel
   class Reservation < Loader
 
-    OLDEST_RES_DATE = Date.new(1900, 01, 01)
-    NEWEST_RES_DATE = Date.new(3999, 12, 31)
-
     attr_reader :start_date, :end_date, :room
 
     def initialize(data)
-      # MUST BE INSTANCE OF ROOM
       if data[:room].class != Room
         raise ArgumentError.new("Must enter room to be reserved")
       end
@@ -19,14 +15,18 @@ module  Hotel
 
       @start_date = validate_date(data[:start_date])
       @end_date = validate_date(data[:end_date])
-
       validate_stay(@start_date, @end_date)
 
       # OPTIONAL
-      @block = data[:block]
+      @block = data[:block] # NIL if not provided
     end
 
+    def total_cost
 
+    end
+
+    def stay_length
+    end
 
   end # Class Reservation
 end # Module Hotel
