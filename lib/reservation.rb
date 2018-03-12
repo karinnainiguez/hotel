@@ -5,6 +5,8 @@ require_relative 'room'
 module  Hotel
   class Reservation < Validate
 
+    BLOCK_DISCOUNT = 0.20
+
     attr_reader :start_date, :end_date, :room
 
     def initialize(data)
@@ -22,8 +24,11 @@ module  Hotel
     end
 
     def total_cost
-      stay_length * @room.price
-
+      cost = stay_length * @room.price
+      if @block
+        cost *= BLOCK_DISCOUNT
+      end
+      return cost
     end
 
     def stay_length
