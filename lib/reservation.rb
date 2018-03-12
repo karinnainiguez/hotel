@@ -1,9 +1,9 @@
 
-require_relative 'loader'
+require_relative 'validate'
 require_relative 'room'
 
 module  Hotel
-  class Reservation < Loader
+  class Reservation < Validate
 
     attr_reader :start_date, :end_date, :room
 

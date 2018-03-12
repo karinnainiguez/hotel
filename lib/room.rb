@@ -1,9 +1,9 @@
 
-require_relative 'loader'
+require_relative 'validate'
 require 'date'
 
 module  Hotel
-  class Room < Loader
+  class Room < Validate
 
     attr_reader :number, :reserved, :blocked
     attr_accessor :price
@@ -27,7 +27,7 @@ module  Hotel
       end
     end
 
-    def reserve(start_date, end_date)
+    def reserve(start_date, end_date, block: nil)
       start_date = validate_date(start_date)
       end_date = validate_date(end_date)
       validate_stay(start_date, end_date)
@@ -39,11 +39,20 @@ module  Hotel
     end
 
     def blocked?(date)
-
+      date = validate_date(date)
+      existing_blocks = @blocked.find do |name, dates|
+        dates.include?(date)
+      end
+      return existing_blocks.keys
     end
 
     def block(date, name)
-
+      date = validate_date(date)
+      if @blocked[name]
+        @blocked[name] << date
+      else
+        @blocked[name] = [date]
+      end
     end
 
 

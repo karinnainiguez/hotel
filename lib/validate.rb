@@ -1,6 +1,6 @@
-
+require 'date'
 module Hotel
-  class Loader
+  class Validate
 
     OLDEST_RES_DATE = Date.new(1900, 01, 01)
     NEWEST_RES_DATE = Date.new(3999, 12, 31)

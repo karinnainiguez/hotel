@@ -90,11 +90,30 @@ describe "Room Class" do
   end # reserved?
 
   describe "#block" do
+    it "updates the room's blocked hash with name key value" do
+
+    end
+
+    it "updates the value of key to array of dates" do
+
+    end
+
+    it "raises error if incorrect date format entered" do
+
+    end
 
 
   end # block
 
   describe "#blocked?" do
+
+    it "returns the block name if room is currently blocked" do
+
+    end
+
+    it "returns nil if the room is not blocked" do
+
+    end
 
   end # blocked?
 
